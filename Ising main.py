@@ -5,7 +5,7 @@ import random as r
 import math as mt
 
 #---------------------------------SETTINGS-----------------------------------
-L=15 #size of the lattice
+L=5 #size of the lattice
 beta=0.2 #inverse temperature value, when not specified otherwise
 
 
@@ -81,12 +81,13 @@ def Magnetization(Lattice):
 Betas=[] # Ranging beta
 MvsBeta=[]# Mean Magnetization M values for Betas values
 Nterm=1000 # Termalization cycles, each with L*L Metropolis iterations at random-selected sites
-Ndata=1000 # Number of data points collected, each single data point is collected after L*L Metropolis iterations at random-selected sites.
+Ndata=100 # Number of data points collected, each single data point is collected after L*L Metropolis iterations at random-selected sites.
 # Range of betas
 BetaMin=1/10
 BetaMax=10/10
 Nsteps=20
 M=[]#Magnetization
+LatticeConfigurations=[] #How should I save all configurations(each is a list), but for different temperatures?
 for m in range(Nsteps):
     Lattice=NewLattice(L)
     beta=BetaMin+m*((BetaMax-BetaMin)/Nsteps)
@@ -109,3 +110,8 @@ plt.xlabel("Beta")
 plt.ylabel("M")
 plt.show()
 plt.close()
+
+np.savetxt("data1.gz", M, fmt='%.18e', delimiter=' ', newline='\n', header='', footer='', comments='The magnetization of each configuration, vs beta', encoding=None)
+
+temp=np.array(M)
+print(M)
